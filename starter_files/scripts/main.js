@@ -25,34 +25,38 @@ function handValue (hand) {
   return;
 }
 
-let handArray = [[ "8", "A", "J" ]]
+let handArray = [[ "8", "J" ]]
 //Take in an array of hand values
 function handCalculator(handArray){
   //Declaring the array to store values of the hands that come in
   let resultsArray=[]
   //Allow the card loop below to access the hand object to insert more hands
-  let self = this
+  //let self = this
   //Function will call itself later on and add in hand array. Need to loop
   handArray.forEach(function(hand){
     //First is to replace other face cards
-    hand.map(function(card){
-      if(card == "J" || card == "K" || card == "Q"){
-        card = 10
+    let handI = hand.map(function(card, x, y, z){
+      if(card === "J" || card === "K" || card === "Q"){
+        console.log(10)
+        return 10
         //If there is a card with an A, it sends it to the original function to be processed
       } else if(card == "A"){
         card = 1
-        handCalculator(self.push(this))
+        handCalculator(self.push(z))
         card = 11
-        handCalculator(self.push(this))
+        handCalculator(self.push(z))
       }
       //This is to turn strings into numbers for reduce
       else {
-        card = Number(card)
+        console.log(parseInt(card))
+        return parseInt(card)
       }
     })
+    //Console is to see if the map stuck to the hand
+        console.log(handI)
     //Calculates the total value of the hand and pushes it to an array
-    hand.reduce(function(total,num){
-      resultsArray(total + num);
+    handI.reduce(function(total,num){
+      resultsArray.push(total + num);
     })
   })
   //Calculate the optimal value from the hands
@@ -64,7 +68,8 @@ function handCalculator(handArray){
         return x
       }
     }
-  })
+  },resultsArray[0])
+  console.log(resultsArray)
 }
 
 handCalculator(handArray)
